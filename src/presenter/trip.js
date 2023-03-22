@@ -1,8 +1,8 @@
-import TripList from "../view/trip-list.js";
-import PreviewPointView from "../view/point.js";
-import EditingPointView from "../view/editing-form.js";
-import SortingView from "../view/sorting.js";
-import { render } from "../render.js";
+import TripList from '../view/trip-list.js';
+import PreviewPointView from '../view/point.js';
+import EditingPointView from '../view/editing-form.js';
+import SortingView from '../view/sorting.js';
+import { render } from '../render.js';
 
 export default class TripEventsPresenter {
   #eventsList = null;
@@ -50,34 +50,34 @@ export default class TripEventsPresenter {
     };
 
     const onEscKeyDown = (evt) => {
-      if (evt.key === "Escape" || evt.key === "Esc") {
+      if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
         replaceEditFormToPoint();
-        document.removeEventListener("keydown", onEscKeyDown);
+        document.removeEventListener('keydown', onEscKeyDown);
       }
     };
 
     pointPreviewComponent.element
-      .querySelector(".event__rollup-btn")
-      .addEventListener("click", () => {
+      .querySelector('.event__rollup-btn')
+      .addEventListener('click', () => {
         replacePointToEditForm();
-        document.addEventListener("keydown", onEscKeyDown);
+        document.addEventListener('keydown', onEscKeyDown);
       });
 
     editingPointComponent.element
-      .querySelector(".event__rollup-btn")
-      .addEventListener("click", (evt) => {
+      .querySelector('.event__rollup-btn')
+      .addEventListener('click', (evt) => {
         evt.preventDefault();
         replaceEditFormToPoint();
-        document.removeEventListener("keydown", onEscKeyDown);
+        document.removeEventListener('keydown', onEscKeyDown);
       });
 
     editingPointComponent.element
-      .querySelector("form")
-      .addEventListener("submit", (evt) => {
+      .querySelector('form')
+      .addEventListener('submit', (evt) => {
         evt.preventDefault();
         replaceEditFormToPoint();
-        document.removeEventListener("keydown", onEscKeyDown);
+        document.removeEventListener('keydown', onEscKeyDown);
       });
 
     render(pointPreviewComponent, this.#eventsList.element);

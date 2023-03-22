@@ -1,8 +1,8 @@
-import { createElement } from "../render.js";
-import { getDateTime } from "../util.js";
+import { createElement } from '../render.js';
+import { getDateTime } from '../util.js';
 
 const renderDestinationPictures = (pictures) => {
-  let result = "";
+  let result = '';
   pictures.forEach((picture) => {
     result = `${result}<img class="event__photo" src="${picture.src}" alt="${picture.description}">`;
   });
@@ -10,9 +10,9 @@ const renderDestinationPictures = (pictures) => {
 };
 
 const renderOffers = (allOffers, checkedOffers) => {
-  let result = "";
+  let result = '';
   allOffers.forEach((offer) => {
-    const checked = checkedOffers.includes(offer.id) ? "checked" : "";
+    const checked = checkedOffers.includes(offer.id) ? 'checked' : '';
     result = `${result}<div class="event__available-offers">
     <div class="event__offer-selector">
       <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-luggage" ${checked}>
@@ -43,56 +43,56 @@ const createEditingPointTemplate = (point, destinations, offers) => {
               <legend class="visually-hidden">Event type</legend>
               <div class="event__type-item">
                 <input id="event-type-taxi-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="taxi" ${
-                  "taxi" === type ? "checked" : ""
-                }>
+  'taxi' === type ? 'checked' : ''
+}>
                 <label class="event__type-label  event__type-label--taxi" for="event-type-taxi-1">Taxi</label>
               </div>
               <div class="event__type-item">
                 <input id="event-type-bus-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="bus" ${
-                  "bus" === type ? "checked" : ""
-                }>
+  'bus' === type ? 'checked' : ''
+}>
                 <label class="event__type-label  event__type-label--bus" for="event-type-bus-1">Bus</label>
               </div>
               <div class="event__type-item">
                 <input id="event-type-train-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="train" ${
-                  "train" === type ? "checked" : ""
-                }>
+  'train' === type ? 'checked' : ''
+}>
                 <label class="event__type-label  event__type-label--train" for="event-type-train-1">Train</label>
               </div>
               <div class="event__type-item">
                 <input id="event-type-ship-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="ship" ${
-                  "ship" === type ? "checked" : ""
-                }>
+  'ship' === type ? 'checked' : ''
+}>
                 <label class="event__type-label  event__type-label--ship" for="event-type-ship-1">Ship</label>
               </div>
               <div class="event__type-item">
                 <input id="event-type-drive-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="drive" ${
-                  "drive" === type ? "checked" : ""
-                }>
+  'drive' === type ? 'checked' : ''
+}>
                 <label class="event__type-label  event__type-label--drive" for="event-type-drive-1">Drive</label>
               </div>
               <div class="event__type-item">
                 <input id="event-type-flight-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="flight" ${
-                  "flight" === type ? "checked" : ""
-                }>
+  'flight' === type ? 'checked' : ''
+}>
                 <label class="event__type-label  event__type-label--flight" for="event-type-flight-1">Flight</label>
               </div>
               <div class="event__type-item">
                 <input id="event-type-check-in-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="check-in" ${
-                  "check-in" === type ? "checked" : ""
-                }>
+  'check-in' === type ? 'checked' : ''
+}>
                 <label class="event__type-label  event__type-label--check-in" for="event-type-check-in-1">Check-in</label>
               </div>
               <div class="event__type-item">
                 <input id="event-type-sightseeing-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="sightseeing" ${
-                  "sightseeing" === type ? "checked" : ""
-                }>
+  'sightseeing' === type ? 'checked' : ''
+}>
                 <label class="event__type-label  event__type-label--sightseeing" for="event-type-sightseeing-1">Sightseeing</label>
               </div>
               <div class="event__type-item">
                 <input id="event-type-restaurant-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="restaurant" ${
-                  "restaurant" === type ? "checked" : ""
-                }>
+  'restaurant' === type ? 'checked' : ''
+}>
                 <label class="event__type-label  event__type-label--restaurant" for="event-type-restaurant-1">Restaurant</label>
               </div>
             </fieldset>
@@ -103,8 +103,8 @@ const createEditingPointTemplate = (point, destinations, offers) => {
           ${type}
           </label>
           <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${
-            destinations[destinationId].name
-          }" list="destination-list-1">
+  destinations[destinationId].name
+}" list="destination-list-1">
           <datalist id="destination-list-1">
             <option value="Amsterdam"></option>
             <option value="Geneva"></option>
@@ -114,13 +114,13 @@ const createEditingPointTemplate = (point, destinations, offers) => {
         <div class="event__field-group  event__field-group--time">
                    <label class="visually-hidden" for="event-start-time-1">From</label>
                    <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${getDateTime(
-                     dateFrom
-                   )}">
+    dateFrom
+  )}">
                    &mdash;
                    <label class="visually-hidden" for="event-end-time-1">To</label>
                    <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${getDateTime(
-                     dateTo
-                   )}">
+    dateTo
+  )}">
                  </div>
         <div class="event__field-group  event__field-group--price">
           <label class="event__label" for="event-price-1">
@@ -143,13 +143,13 @@ const createEditingPointTemplate = (point, destinations, offers) => {
         <section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
           <p class="event__destination-description">${
-            destinations[destinationId].description
-          }</p>
+  destinations[destinationId].description
+}</p>
           <div class="event__photos-container">
                       <div class="event__photos-tape">
                       ${renderDestinationPictures(
-                        destinations[destinationId].pictures
-                      )}
+    destinations[destinationId].pictures
+  )}
                       </div>
                     </div>
         </section>
