@@ -1,4 +1,4 @@
-import { getRandomPositiveInteger, getRandomElement } from '../util.js';
+import { getRandomPositiveInteger, getRandomElement } from '../utils/util.js';
 import dayjs from 'dayjs';
 
 const POINTS_COUNT = 10;
@@ -79,7 +79,7 @@ const generatePoint = (id) => {
   return {
     basePrice: getRandomPositiveInteger(Price.MIN, Price.MAX),
     dateFrom: dayjs().add(getRandomPositiveInteger(-3, 0), 'day').add(getRandomPositiveInteger(-2, 0), 'hour').add(getRandomPositiveInteger(-59, 0), 'minute'),
-    dateTo: dayjs().add(getRandomPositiveInteger(0, 2), 'hour').add(getRandomPositiveInteger(0, 59), 'minute'),
+    dateTo: dayjs().add(getRandomPositiveInteger(0, 2), 'day').add(getRandomPositiveInteger(0, 2), 'hour').add(getRandomPositiveInteger(0, 59), 'minute'),
     destinationId: getRandomElement(destinations).id,
     id,
     isFavorite: Boolean(getRandomPositiveInteger()),

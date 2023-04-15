@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import {dateFormChange, duration, getDate, getTime } from '../util.js';
+import {dateFormChange, duration, getDate, getTime } from '../utils/util.js';
 
 const renderOffers = (allOffers, checkedOffers) => {
   let result = '';
