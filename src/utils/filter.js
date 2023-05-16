@@ -1,4 +1,4 @@
-import { isPointDateFuture, isPointDatePast, isPointDateFuturePast } from './util.js';
+import { isPointDateFuture, isPointDatePast, isPointDateFuturePast } from './point.js';
 
 const FilterType = {
   EVERYTHING: 'everything',

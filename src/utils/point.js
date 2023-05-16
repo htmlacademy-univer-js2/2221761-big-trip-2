@@ -1,12 +1,11 @@
 import dayjs from 'dayjs';
-
 const HOUR_MINUTES_COUNT = 60;
 const TOTAL_DAY_MINUTES_COUNT = 1440;
 const DATE_FORMAT = 'YYYY-MM-DD';
 const DATE_TIME_FORMAT = 'DD/MM/YY hh:mm';
 const TIME_FORMAT = 'hh:mm';
 
-const dateFormChange = (date) => dayjs(date).format('DD MMM');
+const humanizePointDueDate = (date) => dayjs(date).format('DD MMM');
 
 const getDaysOutput = (days) => {
   if (!days) {
@@ -46,44 +45,6 @@ const duration = (dateFrom, dateTo) => {
   return `${daysOutput} ${hoursOutput} ${minutesOutput}`;
 };
 
-const getRandomPositiveInteger = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
-};
-
-
-const getRandomElement = (elements) => {
-  const MIN = 0;
-  const max = elements.length - 1;
-  return elements[getRandomPositiveInteger(MIN, max)];
-};
-
-const updateItem = (items, update) => {
-  const index = items.findIndex((item) => item.id === update.id);
-
-  if (index === -1) {
-    return items;
-  }
-
-  return [
-    ...items.slice(0, index),
-    update,
-    ...items.slice(index + 1),
-  ];
-};
-
-const sortPricePoint = (pointA, pointB) => pointB.basePrice - pointA.basePrice;
-
-const sortDayPoint = (pointA, pointB) => dayjs(pointA.dateFrom).diff(dayjs(pointB.dateFrom));
-
-const sortTimePoint = (pointA, pointB) => {
-  const timePointA = dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
-  const timePointB = dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom));
-  return timePointB - timePointA;
-};
-
 const getDate = (date) => dayjs(date).format(DATE_FORMAT);
 
 const getTime = (date) => dayjs(date).format(TIME_FORMAT);
@@ -96,6 +57,4 @@ const isPointDateFuture = (date) => date.diff(dayjs(), 'day') >= 0;
 
 const isPointDateFuturePast = (dateFrom, dateTo) => dayjs().diff(dateFrom, 'day') > 0 && dateTo.diff(dayjs(), 'day') > 0;
 
-export {sortPricePoint, sortDayPoint, sortTimePoint, getDaysOutput, updateItem, getHoursOutput, getMinutesOutput, getRandomPositiveInteger, getRandomElement, dateFormChange, duration, getDate, getDateTime, getTime, isPointDateFuture, isPointDatePast, isPointDateFuturePast };
-
-
+export { humanizePointDueDate, duration, getDate, getDateTime, getTime, isPointDatePast, isPointDateFuture, isPointDateFuturePast };
