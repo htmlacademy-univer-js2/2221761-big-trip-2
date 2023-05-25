@@ -1,15 +1,19 @@
-const getRandomInteger = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+const getRandomNumber = (start, end) => {
+  start = Math.min(start,end);
+  end = Math.max(start, end);
 
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
+  return Math.round(Math.random()* (end - start) + start);
 };
 
 const getRandomElement = (elements) => {
-  const MIN = 0;
-  const max = elements.length - 1;
-  return elements[getRandomInteger(MIN, max)];
+  const randomIndex = getRandomNumber(0, elements.length - 1);
+
+  return elements[randomIndex];
 };
+
+const getOffersByType = (offers, type) => offers.find((offer) => offer.type === type);
+
+const isEscape = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const updateItem = (items, update) => {
   const index = items.findIndex((item) => item.id === update.id);
@@ -25,10 +29,4 @@ const updateItem = (items, update) => {
   ];
 };
 
-const doCapitalizeString = (string) => {
-  const capFirstString = string[0].toUpperCase();
-  const restOfString = string.slice(1);
-  return capFirstString + restOfString;
-};
-
-export { getRandomInteger, updateItem, getRandomElement, doCapitalizeString };
+export {getRandomNumber, getRandomElement, isEscape, updateItem, getOffersByType};

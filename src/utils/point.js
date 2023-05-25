@@ -1,60 +1,78 @@
 import dayjs from 'dayjs';
-const HOUR_MINUTES_COUNT = 60;
-const TOTAL_DAY_MINUTES_COUNT = 1440;
-const DATE_FORMAT = 'YYYY-MM-DD';
-const DATE_TIME_FORMAT = 'DD/MM/YY hh:mm';
-const TIME_FORMAT = 'hh:mm';
+import duration from 'dayjs/plugin/duration';
 
-const humanizePointDueDate = (date) => dayjs(date).format('DD MMM');
+dayjs.extend(duration);
 
-const getDaysOutput = (days) => {
-  if (!days) {
-    return '';
+const humanizePointDay = (date) => dayjs(date).format('D MMMM');
+
+const humanizePointTime = (date) => dayjs(date).format('HH:mm');
+
+const getEventDuration = (dateFrom, dateTo) => {
+  const timeParts = dayjs.duration(dayjs(dateTo).diff(dateFrom)).
+    format('DD HH mm').
+    split(' ');
+
+  const days = timeParts[0];
+  const hours = timeParts[1];
+
+  let eventDuration = `${timeParts[2]}M`;
+
+  if (hours !== '00' || (hours === '00' && days !== '00')){
+    eventDuration = `${hours}H ${eventDuration}`;
   }
-  if (days < 10) {
-    return `0${days}D`;
+
+  if (days !== '00' ){
+    eventDuration = `${days}D ${eventDuration}`;
   }
-  return `${days}D`;
+
+  return eventDuration;
 };
 
-const getHoursOutput = (days, restHours) => {
-  if (!days && !restHours) {
-    return '';
+const getWeightForNullDate = (dateA, dateB) => {
+  if (dateA === null && dateB === null) {
+    return 0;
   }
-  if(restHours < 10) {
-    return `0${restHours}H`;
+
+  if (dateA === null) {
+    return 1;
   }
-  return `${restHours}H`;
+
+  if (dateB === null) {
+    return -1;
+  }
+
+  return null;
 };
 
-const getMinutesOutput = (restMinutes) => (restMinutes < 10) ? `0${restMinutes}M` : `${restMinutes}M`;
+const getWrightForTwoNullDates = (pointA, pointB) => {
+  const weightA = getWeightForNullDate(pointA.dateFrom, pointA.dateTo);
+  const weightB = getWeightForNullDate(pointB.dateFrom, pointB.dateTo);
 
-const duration = (dateFrom, dateTo) => {
-  const start = dayjs(dateFrom);
-  const end = dayjs(dateTo);
-  const difference = end.diff(start, 'minute');
-
-  const days = Math.floor(difference / TOTAL_DAY_MINUTES_COUNT);
-  const restHours = Math.floor((difference - days * TOTAL_DAY_MINUTES_COUNT) / HOUR_MINUTES_COUNT);
-  const restMinutes = difference - (days * TOTAL_DAY_MINUTES_COUNT + restHours * HOUR_MINUTES_COUNT);
-
-  const daysOutput = getDaysOutput(days);
-  const hoursOutput = getHoursOutput(days, restHours);
-  const minutesOutput = getMinutesOutput(restMinutes);
-
-  return `${daysOutput} ${hoursOutput} ${minutesOutput}`;
+  return weightA && weightB;
 };
 
-const getDate = (date) => dayjs(date).format(DATE_FORMAT);
+const sortPointsByDay = (pointA, pointB) => {
+  const weight = getWeightForNullDate(pointA.dateFrom, pointB.dateFrom);
 
-const getTime = (date) => dayjs(date).format(TIME_FORMAT);
+  return weight ?? dayjs(pointA.dateFrom).diff(dayjs(pointB.dateFrom));
+};
 
-const getDateTime = (date) => dayjs(date).format(DATE_TIME_FORMAT);
+const sortPointsByTime = (pointA, pointB) => {
+  const weight = getWrightForTwoNullDates(pointA, pointB);
 
-const isPointDatePast = (date) => dayjs().diff(date, 'day') > 0;
+  const timeA = dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
+  const timeB = dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom));
 
-const isPointDateFuture = (date) => date.diff(dayjs(), 'day') >= 0;
+  return weight?? timeB - timeA;
+};
 
-const isPointDateFuturePast = (dateFrom, dateTo) => dayjs().diff(dateFrom, 'day') > 0 && dateTo.diff(dayjs(), 'day') > 0;
+const sortPointsByPrice = (pointA, pointB) => pointB.basePrice - pointA.basePrice;
 
-export { humanizePointDueDate, duration, getDate, getDateTime, getTime, isPointDatePast, isPointDateFuture, isPointDateFuturePast };
+const humanizeFormDate = (date) => dayjs(date).format('DD/MM/YY HH:mm');
+
+const isPastPoint = (point) => dayjs(point.dateFrom).isBefore(dayjs());
+
+const isFuturePoint = (point) => dayjs(point.dateFrom).isAfter(dayjs());
+
+export{ humanizePointDay, humanizePointTime, humanizeFormDate, getEventDuration,
+  isPastPoint, isFuturePoint, getWeightForNullDate, sortPointsByDay, sortPointsByTime, sortPointsByPrice };
