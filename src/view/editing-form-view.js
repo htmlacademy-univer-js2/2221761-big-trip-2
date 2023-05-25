@@ -6,7 +6,7 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 const fillOffersList = (checkedOfferIds, allOffers) => (allOffers.map((offer) => (
-    `<div class="event__offer-selector">
+  `<div class="event__offer-selector">
       <input class="event__offer-checkbox  visually-hidden"
       id="event-offer-${offer.id}" type="checkbox" name="event-offer-comfort"
       ${checkedOfferIds.includes(offer.id) ? 'checked' : ''}>
@@ -56,7 +56,7 @@ const getPhotosBlock = (items) => {
   }
 
   const photos = items.map((item) => `<img class="event__photo" src='${item.src}' alt='${item.description}'></img>`).
-  join('');
+    join('');
 
   return (
     `<div class="event__photos-container">
