@@ -267,7 +267,7 @@ export default class EditingFormView extends AbstractStatefulView {
         dateFormat: 'd/m/y H:i',
         enableTime: true,
         defaultDate: this._state.dateFrom,
-        minDate: this._state.dateFrom,
+        maxDate: this._state.dateTo,
         onChange: this.#dateFromChangeHandler,
       },
     );
@@ -334,13 +334,13 @@ export default class EditingFormView extends AbstractStatefulView {
   };
 
   #dateFromChangeHandler = ([date]) => {
-    this.updateElement({
+    this._setState({
       dateFrom: date,
     });
   };
 
   #dateToChangeHandler = ([date]) => {
-    this.updateElement({
+    this._setState({
       dateTo: date,
     });
   };
