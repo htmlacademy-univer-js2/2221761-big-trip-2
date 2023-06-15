@@ -232,5 +232,8 @@ export default class TripEventsPresenter {
   #handleModeChange = () => {
     this.#newFormPresenter.destroy();
     this.#eventsPresenter.forEach((presenter) => presenter.resetView());
+    if (this.points.length === 0) {
+      this.#renderNoEvents();
+    }
   };
 }
