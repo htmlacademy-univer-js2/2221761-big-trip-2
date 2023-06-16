@@ -77,7 +77,12 @@ export default class TripEventsPresenter {
     this.#currentSortType = SortType.DAY;
     this.#filtersModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
     this.#deleteNoEventsComponent();
-    this.#newFormPresenter.init(callback);
+    this.#newFormPresenter.init(() => {
+      if(this.points.length === 0){
+        this.#renderNoEvents();
+      }
+      callback();
+    });
   }
 
   #sortEvents = (sortType) => {
@@ -232,8 +237,5 @@ export default class TripEventsPresenter {
   #handleModeChange = () => {
     this.#newFormPresenter.destroy();
     this.#eventsPresenter.forEach((presenter) => presenter.resetView());
-    if (this.points.length === 0) {
-      this.#renderNoEvents();
-    }
   };
 }
